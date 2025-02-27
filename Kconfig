@@ -1,0 +1,10 @@
+config INT_VALUE
+  int "The integer value"
+  help
+    Some int value that we'll print.
+
+config FEATURE1
+  bool "Enable feature 1"
+
+config FEATURE2
+  bool "Enable feature 2"

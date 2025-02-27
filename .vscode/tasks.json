@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run app prj1",
+      "command": "bazelisk run :app --platforms=:prj1",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run app prj2",
+      "command": "bazelisk run :app --platforms=:prj2",
+      "type": "shell",
+      "problemMatcher": []
+    }
+  ]
+}
