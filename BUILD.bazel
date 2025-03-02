@@ -15,33 +15,29 @@
 load("@bazel_skylib//rules:common_settings.bzl", "bool_flag", "int_flag")
 load(":feature_cc_library.bzl", "feature_cc_library")
 
-bool_flag(name = "CONFIG_FEATURE1", build_setting_default=False)
-bool_flag(name = "CONFIG_FEATURE2", build_setting_default=False)
-int_flag(name = "CONFIG_INT_VALUE", build_setting_default=0)
-
 feature_cc_library(
   name = "int_value_cc",
-  flag = ":CONFIG_INT_VALUE",
+  flag = "@kconfig//:CONFIG_INT_VALUE",
 )
 feature_cc_library(
   name = "feature1_cc",
-  flag = ":CONFIG_FEATURE1",
+  flag = "@kconfig//:CONFIG_FEATURE1",
 )
 feature_cc_library(
   name = "feature2_cc",
-  flag = ":CONFIG_FEATURE2",
+  flag = "@kconfig//:CONFIG_FEATURE2",
 )
 
 config_setting(
   name = "CONFIG_FEATURE1=true",
   flag_values = {
-    ":CONFIG_FEATURE1": "true",
+    "@kconfig//:CONFIG_FEATURE1": "true",
   },
 )
 config_setting(
   name = "CONFIG_FEATURE2=true",
   flag_values = {
-    ":CONFIG_FEATURE2": "true",
+    "@kconfig//:CONFIG_FEATURE2": "true",
   },
 )
 
@@ -69,9 +65,9 @@ platform(
   name = "prj1",
   parents = ["@platforms//host"],
   flags = [
-    "--//:CONFIG_FEATURE1=true",
-    "--//:CONFIG_FEATURE2=true",
-    "--//:CONFIG_INT_VALUE=5",
+    "--@kconfig//:CONFIG_FEATURE1=true",
+    "--@kconfig//:CONFIG_FEATURE2=true",
+    "--@kconfig//:CONFIG_INT_VALUE=5",
   ]
 )
 
@@ -79,7 +75,7 @@ platform(
   name = "prj2",
   parents = ["@platforms//host"],
   flags = [
-    "--//:CONFIG_FEATURE1=true",
-    "--//:CONFIG_INT_VALUE=15",
+    "--@kconfig//:CONFIG_FEATURE1=true",
+    "--@kconfig//:CONFIG_INT_VALUE=15",
   ]
 )

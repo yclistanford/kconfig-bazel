@@ -12,7 +12,7 @@ def write_bzl_file(ostream, kconfig: kconfiglib.Kconfig) -> None:
         for sym_str in str(sym).splitlines():
             ostream.write(f"# {sym_str}\n")
         if sym.type == kconfiglib.INT:
-            ostream.write(f"""native.config_settings(
+            ostream.write(f"""int_flag(
     name = "CONFIG_{sym_name}",
 )
 """

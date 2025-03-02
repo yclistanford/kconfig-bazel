@@ -134,6 +134,22 @@
   },
   "selectedYankedVersions": {},
   "moduleExtensions": {
+    "//:kconfig.bzl%libkconfig": {
+      "general": {
+        "bzlTransitiveDigest": "dZBgYueAq0CUidu+VmjZ/mYq3ppDfWzQtedQekIIUPA=",
+        "usagesDigest": "GaZBRIlkjQEmJpNKH9MTEBMUuT6rwmgmR5hcVfgVLOY=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "kconfig": {
+            "repoRuleId": "@@//:kconfig.bzl%gen_kconfiglib",
+            "attributes": {}
+          }
+        },
+        "recordedRepoMappingEntries": []
+      }
+    },
     "@@platforms//host:extension.bzl%host_platform": {
       "general": {
         "bzlTransitiveDigest": "xelQcPZH8+tmuOHVjL9vDxMnnQNMlwj0SlvgoqBkm4U=",

@@ -25,3 +25,6 @@ pip.parse(
 )
 
 use_repo(pip, "pip")
+
+libkconfig = use_extension("//:kconfig.bzl", "libkconfig")
+use_repo(libkconfig, "kconfig")
