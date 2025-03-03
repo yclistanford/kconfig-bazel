@@ -14,24 +14,6 @@
 
 # load("@bazel_skylib//rules:common_settings.bzl", "label_flag")
 
-genrule(
-    name = "empty_autoconf",
-    srcs = [],
-    outs = ["autoconf.h"],
-    cmd = "echo \"#pragma once\" > \"$@\"",
-)
-
-cc_library(
-    name = "default_autoconf_lib",
-    hdrs = ["autoconf.h"],
-    deps = [":empty_autoconf"],
-)
-
-label_flag(
-    name = "autoconf_lib",
-    build_setting_default = ":default_autoconf_lib",
-)
-
 # feature_cc_library(
 #   name = "int_value_cc",
 #   flag = "@kconfig//:CONFIG_INT_VALUE",
@@ -58,7 +40,7 @@ cc_binary(
       "@kconfig//:CONFIG_FEATURE2=true": ["src/feature2.cc"],
     }),
     deps = [
-      ":autoconf_lib",
+      "@kconfig//:autoconf",
     ],
     copts = ["-include autoconf.h"],
     includes = ["include"],
@@ -67,15 +49,9 @@ cc_binary(
 platform(
   name = "prj1",
   parents = ["@prj1//:platform"],
-  flags = [
-    "--//:autoconf_lib=@prj1//:autoconf",
-  ]
 )
 
 platform(
   name = "prj2",
   parents = ["@prj2//:platform"],
-  flags = [
-    "--//:autoconf_lib=@prj2//:autoconf",
-  ]
 )
