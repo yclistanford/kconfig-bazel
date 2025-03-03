@@ -27,4 +27,15 @@ pip.parse(
 use_repo(pip, "pip")
 
 libkconfig = use_extension("//:kconfig.bzl", "libkconfig")
+libkconfig.kconfig_root(
+    kconfig_file = ":kconfig.BUILD",
+)
+libkconfig.projects(
+    prj_configs = [
+        ":prj1.BUILD", # Eventually - ":prj1.conf",
+        ":prj2.BUILD", # Eventually - ":prj2.conf",
+    ],
+)
 use_repo(libkconfig, "kconfig")
+use_repo(libkconfig, "prj1")
+use_repo(libkconfig, "prj2")

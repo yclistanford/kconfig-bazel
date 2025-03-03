@@ -1,7 +1,7 @@
 #include "myfeatures.h"
-#include "CONFIG_INT_VALUE.h"
-#include "CONFIG_FEATURE1.h"
-#include "CONFIG_FEATURE2.h"
+// #include "CONFIG_INT_VALUE.h"
+// #include "CONFIG_FEATURE1.h"
+// #include "CONFIG_FEATURE2.h"
 
 #include <iostream>
 

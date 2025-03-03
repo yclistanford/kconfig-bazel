@@ -136,15 +136,29 @@
   "moduleExtensions": {
     "//:kconfig.bzl%libkconfig": {
       "general": {
-        "bzlTransitiveDigest": "dZBgYueAq0CUidu+VmjZ/mYq3ppDfWzQtedQekIIUPA=",
-        "usagesDigest": "GaZBRIlkjQEmJpNKH9MTEBMUuT6rwmgmR5hcVfgVLOY=",
+        "bzlTransitiveDigest": "yA9MoHXgp0moveMEHbqsZypBScANCZRGpnFXRvJSzrE=",
+        "usagesDigest": "YsnHzj1CbblkllAg0IErB3t5UHRtc1pNe+FcKGNKpJ4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
           "kconfig": {
             "repoRuleId": "@@//:kconfig.bzl%gen_kconfiglib",
-            "attributes": {}
+            "attributes": {
+              "kconfig_file": "@@//:kconfig.BUILD"
+            }
+          },
+          "prj1": {
+            "repoRuleId": "@@//:kconfig.bzl%gen_projectlib",
+            "attributes": {
+              "conf_file": "@@//:prj1.BUILD"
+            }
+          },
+          "prj2": {
+            "repoRuleId": "@@//:kconfig.bzl%gen_projectlib",
+            "attributes": {
+              "conf_file": "@@//:prj2.BUILD"
+            }
           }
         },
         "recordedRepoMappingEntries": []

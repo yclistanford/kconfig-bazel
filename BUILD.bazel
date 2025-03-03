@@ -12,34 +12,38 @@
 #   visibility = ["//visibility:public"],
 # )
 
-load("@bazel_skylib//rules:common_settings.bzl", "bool_flag", "int_flag")
-load(":feature_cc_library.bzl", "feature_cc_library")
+# load("@bazel_skylib//rules:common_settings.bzl", "label_flag")
 
-feature_cc_library(
-  name = "int_value_cc",
-  flag = "@kconfig//:CONFIG_INT_VALUE",
-)
-feature_cc_library(
-  name = "feature1_cc",
-  flag = "@kconfig//:CONFIG_FEATURE1",
-)
-feature_cc_library(
-  name = "feature2_cc",
-  flag = "@kconfig//:CONFIG_FEATURE2",
+genrule(
+    name = "empty_autoconf",
+    srcs = [],
+    outs = ["autoconf.h"],
+    cmd = "echo \"#pragma once\" > \"$@\"",
 )
 
-config_setting(
-  name = "CONFIG_FEATURE1=true",
-  flag_values = {
-    "@kconfig//:CONFIG_FEATURE1": "true",
-  },
+cc_library(
+    name = "default_autoconf_lib",
+    hdrs = ["autoconf.h"],
+    deps = [":empty_autoconf"],
 )
-config_setting(
-  name = "CONFIG_FEATURE2=true",
-  flag_values = {
-    "@kconfig//:CONFIG_FEATURE2": "true",
-  },
+
+label_flag(
+    name = "autoconf_lib",
+    build_setting_default = ":default_autoconf_lib",
 )
+
+# feature_cc_library(
+#   name = "int_value_cc",
+#   flag = "@kconfig//:CONFIG_INT_VALUE",
+# )
+# feature_cc_library(
+#   name = "feature1_cc",
+#   flag = "@kconfig//:CONFIG_FEATURE1",
+# )
+# feature_cc_library(
+#   name = "feature2_cc",
+#   flag = "@kconfig//:CONFIG_FEATURE2",
+# )
 
 cc_binary(
     name = "app",
@@ -48,34 +52,30 @@ cc_binary(
       "include/myfeatures.h",
     ] + select({
       "//conditions:default": [],
-      ":CONFIG_FEATURE1=true": ["src/feature1.cc"],
+      "@kconfig//:CONFIG_FEATURE1=true": ["src/feature1.cc"],
     }) + select({
       "//conditions:default": [],
-      ":CONFIG_FEATURE2=true": ["src/feature2.cc"],
+      "@kconfig//:CONFIG_FEATURE2=true": ["src/feature2.cc"],
     }),
     deps = [
-      ":int_value_cc",
-      ":feature1_cc",
-      ":feature2_cc",
+      ":autoconf_lib",
     ],
+    copts = ["-include autoconf.h"],
     includes = ["include"],
 )
 
 platform(
   name = "prj1",
-  parents = ["@platforms//host"],
+  parents = ["@prj1//:platform"],
   flags = [
-    "--@kconfig//:CONFIG_FEATURE1=true",
-    "--@kconfig//:CONFIG_FEATURE2=true",
-    "--@kconfig//:CONFIG_INT_VALUE=5",
+    "--//:autoconf_lib=@prj1//:autoconf",
   ]
 )
 
 platform(
   name = "prj2",
-  parents = ["@platforms//host"],
+  parents = ["@prj2//:platform"],
   flags = [
-    "--@kconfig//:CONFIG_FEATURE1=true",
-    "--@kconfig//:CONFIG_INT_VALUE=15",
+    "--//:autoconf_lib=@prj2//:autoconf",
   ]
 )
