@@ -5,7 +5,13 @@ import sys
 
 
 def write_bzl_file(ostream, kconfig: kconfiglib.Kconfig) -> None:
-    ostream.write('load("@bazel_skylib//rules:common_settings.bzl", "bool_flag", "int_flag")\n')
+    ostream.write(
+        """load("@bazel_skylib//rules:common_settings.bzl",
+    "bool_flag",
+    "int_flag",
+)
+"""
+    )
     for sym_name, sym in kconfig.syms.items():
         if sym is None:
             continue
@@ -14,9 +20,37 @@ def write_bzl_file(ostream, kconfig: kconfiglib.Kconfig) -> None:
         if sym.type == kconfiglib.INT:
             ostream.write(f"""int_flag(
     name = "CONFIG_{sym_name}",
+    build_setting_default=0,
+    visibility = ["//visibility:public"],
 )
 """
-        )
+            )
+        if sym.type == kconfiglib.BOOL:
+            ostream.write(f"""bool_flag(
+    name = "CONFIG_{sym_name}",
+    build_setting_default=False,
+    visibility = ["//visibility:public"],
+)
+config_setting(
+    name = "CONFIG_{sym_name}=true",
+    flag_values = {{
+        ":CONFIG_{sym_name}": "true",
+    }},
+)
+"""
+            )
+
+    ostream.write('\nload(":feature_cc_library.bzl", "autoconf_cc_library")\n')
+    ostream.write("autoconf_cc_library(\n")
+    ostream.write("    name = \"autoconf\",\n")
+    ostream.write("    flags = [\n")
+    for sym_name, sym in kconfig.syms.items():
+        if sym is None:
+            continue
+        ostream.write(f"        \":CONFIG_{sym_name}\",\n")
+    ostream.write("    ],\n")
+    ostream.write(")\n")
+
 
 def generate_bzl_file(kconfig_path: pathlib.Path, out: pathlib.Path | None) -> None:
     kconfig = kconfiglib.Kconfig()
