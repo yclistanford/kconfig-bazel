@@ -13,7 +13,7 @@ def write_bzl_file(ostream, kconfig: kconfiglib.Kconfig) -> None:
 """
     )
     for sym_name, sym in kconfig.syms.items():
-        if sym is None:
+        if sym is None or sym.type == kconfiglib.UNKNOWN:
             continue
         for sym_str in str(sym).splitlines():
             ostream.write(f"# {sym_str}\n")
@@ -45,7 +45,7 @@ config_setting(
     ostream.write("    name = \"autoconf\",\n")
     ostream.write("    flags = [\n")
     for sym_name, sym in kconfig.syms.items():
-        if sym is None:
+        if sym is None or sym.type == kconfiglib.UNKNOWN:
             continue
         ostream.write(f"        \":CONFIG_{sym_name}\",\n")
     ostream.write("    ],\n")
@@ -53,7 +53,8 @@ config_setting(
 
 
 def generate_bzl_file(kconfig_path: pathlib.Path, out: pathlib.Path | None) -> None:
-    kconfig = kconfiglib.Kconfig()
+    print("Loading Kconfig file: " + str(kconfig_path))
+    kconfig = kconfiglib.Kconfig(filename=kconfig_path)
     kconfig.load_allconfig(kconfig_path)
     if out:
         with open(out, "w", encoding='utf-8') as f:

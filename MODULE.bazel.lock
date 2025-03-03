@@ -136,8 +136,8 @@
   "moduleExtensions": {
     "//:kconfig.bzl%libkconfig": {
       "general": {
-        "bzlTransitiveDigest": "yA9MoHXgp0moveMEHbqsZypBScANCZRGpnFXRvJSzrE=",
-        "usagesDigest": "YsnHzj1CbblkllAg0IErB3t5UHRtc1pNe+FcKGNKpJ4=",
+        "bzlTransitiveDigest": "4mX295Y/7hbkx4aaOx7mJeF3l8U/lU3Sb4ZgarqY9P8=",
+        "usagesDigest": "npv43AU01TpQJ8o0LNShjHGd+jzZeUjqDg8P5XVIoTU=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -145,7 +145,7 @@
           "kconfig": {
             "repoRuleId": "@@//:kconfig.bzl%gen_kconfiglib",
             "attributes": {
-              "kconfig_file": "@@//:kconfig.BUILD"
+              "kconfig_file": "@@//:Kconfig"
             }
           },
           "prj1": {

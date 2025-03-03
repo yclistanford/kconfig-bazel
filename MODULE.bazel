@@ -28,7 +28,8 @@ use_repo(pip, "pip")
 
 libkconfig = use_extension("//:kconfig.bzl", "libkconfig")
 libkconfig.kconfig_root(
-    kconfig_file = ":kconfig.BUILD",
+    # kconfig_file = ":kconfig.BUILD",
+    kconfig_file = ":Kconfig",
 )
 libkconfig.projects(
     prj_configs = [
