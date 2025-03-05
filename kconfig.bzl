@@ -38,10 +38,11 @@ gen_kconfiglib = repository_rule(
 
 def _gen_projectlib_impl(repo_ctx):
     script_path = Label(":bazel_config.py")
-    build_file_name = "BUILD.bazel"
-    build_file_path = repo_ctx.path(build_file_name)
+    bzl_file_name = "kconfig_flag_values.bzl"
+    bzl_file_path = repo_ctx.path(bzl_file_name)
 
-    repo_ctx.file(build_file_name)
+    repo_ctx.file(bzl_file_name)
+    repo_ctx.file("BUILD.bazel")
 
     args = [
         repo_ctx.which("python3"),
@@ -52,7 +53,7 @@ def _gen_projectlib_impl(repo_ctx):
         "--project",
         str(repo_ctx.path(repo_ctx.attr.conf_file)),
         "-o",
-        build_file_path,
+        bzl_file_path,
     ]
     result = repo_ctx.execute(args)
     if result.return_code != 0:

@@ -136,7 +136,7 @@
   "moduleExtensions": {
     "//:kconfig.bzl%libkconfig": {
       "general": {
-        "bzlTransitiveDigest": "I80m4Q9zhopn48tXi4KNEMnUJVJE2iISr7AHTbFizZY=",
+        "bzlTransitiveDigest": "kh7AVD5hZeBM9IbOTQviJBXEzhOS+yzZguUsBj2ZKSY=",
         "usagesDigest": "qiehZARSKWCIaHfQfayocw5t82KYcTpygLI4g4CIEGU=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},

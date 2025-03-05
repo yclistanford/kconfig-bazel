@@ -1,3 +1,5 @@
+load("@prj1//:kconfig_flag_values.bzl", PRJ1_KCONFIG_FLAGS = "KCONFIG_FLAGS")
+load("@prj2//:kconfig_flag_values.bzl", PRJ2_KCONFIG_FLAGS = "KCONFIG_FLAGS")
 cc_binary(
     name = "app",
     srcs = [
@@ -19,10 +21,12 @@ cc_binary(
 
 platform(
   name = "prj1",
-  parents = ["@prj1//:platform"],
+  parents = ["@platforms//host"],
+  flags = PRJ1_KCONFIG_FLAGS,
 )
 
 platform(
   name = "prj2",
-  parents = ["@prj2//:platform"],
+  parents = ["@platforms//host"],
+  flags = PRJ2_KCONFIG_FLAGS,
 )

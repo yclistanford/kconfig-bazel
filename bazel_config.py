@@ -61,10 +61,7 @@ def write_project_build_file(
     ostream,
     kconfig: kconfiglib.Kconfig,
 ) -> None:
-    ostream.write("platform(\n")
-    ostream.write("    name = \"platform\",\n")
-    ostream.write("    parents = [\"@platforms//host\"],\n")
-    ostream.write("    flags = [\n")
+    ostream.write("KCONFIG_FLAGS = [\n")
     for sym in kconfig.unique_defined_syms:
         if sym is None or sym.type == kconfiglib.UNKNOWN:
             continue
@@ -77,9 +74,7 @@ def write_project_build_file(
         else:
             raise RuntimeError(f"Unsupported symbol type: {sym.type}")
         ostream.write(f"        \"--{name}={value}\",\n")
-    ostream.write("    ],\n")
-    ostream.write("    visibility = [\"//visibility:public\"],\n")
-    ostream.write(")\n")
+    ostream.write("]\n")
 
 
 def generate_kconfig_build_file(
