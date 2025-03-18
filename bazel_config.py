@@ -1,7 +1,7 @@
 import pathlib
 import argparse
-import kconfiglib
 import sys
+import kconfiglib
 
 
 def write_kconfig_build_file(
@@ -12,6 +12,7 @@ def write_kconfig_build_file(
         """load("@bazel_skylib//rules:common_settings.bzl",
     "bool_flag",
     "int_flag",
+    "string_flag",
 )
 """
     )
@@ -29,7 +30,7 @@ def write_kconfig_build_file(
 )
 """
             )
-        if sym.type == kconfiglib.BOOL:
+        elif sym.type == kconfiglib.BOOL:
             ostream.write(
                 f"""bool_flag(
     name = "CONFIG_{sym_name}",
@@ -41,6 +42,15 @@ config_setting(
     flag_values = {{
         ":CONFIG_{sym_name}": "true",
     }},
+)
+"""
+            )
+        elif sym.type == kconfiglib.STRING:
+            ostream.write(
+                f"""string_flag(
+    name = "CONFIG_{sym_name}",
+    build_setting_default="",
+    visibility = ["//visibility:public"],
 )
 """
             )
@@ -71,6 +81,8 @@ def write_project_build_file(
             value = sym.str_value
         elif sym.type == kconfiglib.BOOL:
             value = "true" if sym.str_value == 'y' else "false"
+        elif sym.type == kconfiglib.STRING:
+            value = f'\\"{sym.str_value}\\"'
         else:
             raise RuntimeError(f"Unsupported symbol type: {sym.type}")
         ostream.write(f"        \"--{name}={value}\",\n")

@@ -8,3 +8,7 @@ config FEATURE1
 
 config FEATURE2
   bool "Enable feature 2"
+
+config GREETING
+  string "Welcome greetings"
+  default "Hello "

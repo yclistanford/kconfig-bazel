@@ -6,7 +6,7 @@
 #include <iostream>
 
 int main() {
-  std::cout << "Hello " << CONFIG_INT_VALUE << std::endl;
+  std::cout << CONFIG_GREETING << CONFIG_INT_VALUE << std::endl;
 #if CONFIG_FEATURE1 == 1
   runFeature1();
 #endif
